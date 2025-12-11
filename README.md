@@ -13,24 +13,26 @@ This setup demonstrates real-world web infrastructure concepts used in scalable 
 Client requests enter through Nginx over HTTPS.  
 Nginx terminates SSL, applies security and performance controls, and forwards traffic evenly to backend services.
 
-Client
-   |
-   | HTTPS (443)
-   v
-+-----------------------+
-|        NGINX          |
-| Reverse Proxy + LB    |
-|                       |
-| • SSL Termination     |
-| • Load Balancing      |
-| • Rate Limiting       |
-| • Static Caching      |
-| • Custom Errors       |
-+-----------------------+
-   |        |        |
-   v        v        v
-Backend-1  Backend-2  Backend-3
-(Node.js HTTP Servers)
+                     ┌──────────────────────┐
+                     │      CLIENT          │
+                     └──────────┬───────────┘
+                                │  HTTPS / HTTP
+                                ▼
+                     ┌──────────────────────┐
+                     │        NGINX          │
+                     │  Reverse Proxy Layer  │
+                     │  ─ SSL Termination    │
+                     │  ─ Caching            │
+                     │  ─ Error Pages        │
+                     └──────────┬───────────┘
+                        Load Balancer (LB)
+       ┌───────────────────────┼────────────────────────┐
+       ▼                       ▼                        ▼
+┌─────────────┐        ┌─────────────┐         ┌─────────────┐
+│  BACKEND 1  │        │  BACKEND 2  │         │  BACKEND 3  │
+│  server.js  │        │  server.js  │         │  server.js  │
+└─────────────┘        └─────────────┘         └─────────────┘
+
 
 ## Features
 
