@@ -84,24 +84,26 @@ Nginx terminates SSL, applies security and performance controls, and forwards tr
 
 ## Project Structure
 
+```
 project-root/
-- nginx/
-  -  nginx.conf
-  -  load-balancer.conf
-  - ssl.conf
-  -  cache.conf
-  -  error-pages/
-     -  404.html
-     -  502.html
-- backend1/
-   - server.js
-- backend2/
-   - server.js
-- backend3/
-   - server.js
-- docker-compose.yml
-- Dockerfile
-- README.md
+├── nginx/
+│   ├── nginx.conf
+│   ├── load-balancer.conf
+│   ├── ssl.conf
+│   ├── cache.conf
+│   └── error-pages/
+│       ├── 404.html
+│       └── 502.html
+├── backend1/
+│   └── server.js
+├── backend2/
+│   └── server.js
+├── backend3/
+│   └── server.js
+├── docker-compose.yml
+├── Dockerfile
+└── README.md
+```
 
 
 ## 1. Setup Instructions (Run Project Locally)
