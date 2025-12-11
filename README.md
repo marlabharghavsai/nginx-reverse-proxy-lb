@@ -13,25 +13,24 @@ This setup demonstrates real-world web infrastructure concepts used in scalable 
 Client requests enter through Nginx over HTTPS.  
 Nginx terminates SSL, applies security and performance controls, and forwards traffic evenly to backend services.
 
-          ┌──────────────┐
-          │    Client     │
-          └───────┬──────┘
-                  │  HTTPS / HTTP
-                  ▼
-        ┌────────────────────────┐
-        │      NGINX Proxy       │
-        │  - SSL Termination     │
-        │  - Rate Limiting       │
-        │  - Health Checks       │
-        │  - Caching             │
-        └───┬──────────┬────────┘
-            │          │
-   ┌────────┘     ┌────┘─────────┐
-   ▼              ▼               ▼
-Backend 1     Backend 2      Backend 3
-Node.js        Node.js        Node.js
-App Server     App Server     App Server
-
+Client
+   |
+   | HTTPS (443)
+   v
++-----------------------+
+|        NGINX          |
+| Reverse Proxy + LB    |
+|                       |
+| • SSL Termination     |
+| • Load Balancing      |
+| • Rate Limiting       |
+| • Static Caching      |
+| • Custom Errors       |
++-----------------------+
+   |        |        |
+   v        v        v
+Backend-1  Backend-2  Backend-3
+(Node.js HTTP Servers)
 
 ## Features
 
@@ -87,24 +86,23 @@ App Server     App Server     App Server
 ## Project Structure
 
 project-root/
-├── nginx/
-│   ├── nginx.conf
-│   ├── load-balancer.conf
-│   ├── ssl.conf
-│   ├── cache.conf
-│   └── error-pages/
-│       ├── 404.html
-│       └── 502.html
-├── backend1/
-│   └── server.js
-├── backend2/
-│   └── server.js
-├── backend3/
-│   └── server.js
-├── docker-compose.yml
-├── Dockerfile
-└── README.md
-
+- nginx/
+  -  nginx.conf
+  -  load-balancer.conf
+  - ssl.conf
+  -  cache.conf
+  -  error-pages/
+     -  404.html
+     -  502.html
+- backend1/
+   - server.js
+- backend2/
+   - server.js
+- backend3/
+   - server.js
+- docker-compose.yml
+- Dockerfile
+- README.md
 
 
 ## 1. Setup Instructions (Run Project Locally)
