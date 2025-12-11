@@ -6,32 +6,29 @@ Nginx serves as a single, secure entry point for client traffic and distributes 
 
 This setup demonstrates real-world web infrastructure concepts used in scalable and resilient applications.
 
----
-
 ## Architecture Overview
 
 Client requests enter through Nginx over HTTPS.  
 Nginx terminates SSL, applies security and performance controls, and forwards traffic evenly to backend services.
 
-                     ┌──────────────────────┐
-                     │      CLIENT          │
-                     └──────────┬───────────┘
-                                │  HTTPS / HTTP
-                                ▼
-                     ┌──────────────────────┐
-                     │        NGINX          │
-                     │  Reverse Proxy Layer  │
-                     │  ─ SSL Termination    │
-                     │  ─ Caching            │
-                     │  ─ Error Pages        │
-                     └──────────┬───────────┘
-                        Load Balancer (LB)
-       ┌───────────────────────┼────────────────────────┐
-       ▼                       ▼                        ▼
-┌─────────────┐        ┌─────────────┐         ┌─────────────┐
-│  BACKEND 1  │        │  BACKEND 2  │         │  BACKEND 3  │
-│  server.js  │        │  server.js  │         │  server.js  │
-└─────────────┘        └─────────────┘         └─────────────┘
+ ```text
+              CLIENT
+                │
+           HTTPS / HTTP
+                ▼
+          ┌────────────┐
+          │    NGINX    │
+          │ Reverse Proxy
+          │ SSL Termination
+          │ Caching
+          │ Error Pages │
+          └────────────┘
+                │
+     ┌──────────┼──────────┐
+     ▼          ▼           ▼
+ BACKEND 1   BACKEND 2   BACKEND 3
+ server.js   server.js   server.js
+```
 
 
 ## Features
